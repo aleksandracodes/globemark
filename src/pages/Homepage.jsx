@@ -1,5 +1,12 @@
+import PageNav from '../components/PageNav';
+
 function Homepage() {
-  return <div>Globe Mark</div>;
+  return (
+    <div>
+      <PageNav />
+      <h1>Globe Mark</h1>
+    </div>
+  );
 }
 
 export default Homepage;
