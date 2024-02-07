@@ -3,6 +3,7 @@ import styles from './City.module.css';
 import { useEffect, useState } from 'react';
 import { useCities } from '../contexts/CitiesContext';
 import { flagemojiToPNG } from './FlagEmoji';
+import Spinner from './Spinner';
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat('en', {
@@ -15,7 +16,7 @@ const formatDate = (date) =>
 function City() {
   const { id } = useParams(); // 'id' is the name of the param in the Router
 
-  const { getCity, currentCity } = useCities();
+  const { getCity, currentCity, isLoading } = useCities();
 
   useEffect(
     function () {
@@ -25,6 +26,8 @@ function City() {
   );
 
   const { cityName, emoji, date, notes } = currentCity;
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className={styles.city}>
