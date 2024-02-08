@@ -1,5 +1,12 @@
-import { useSearchParams } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  useMapEvents,
+} from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import { useCities } from '../contexts/CitiesContext';
 import { flagemojiToPNG } from './FlagEmoji';
@@ -45,6 +52,7 @@ function Map() {
           </Marker>
         ))}
         <ChangeCenter position={mapPosition} />
+        <DetectMapClick />
       </MapContainer>
     </div>
   );
@@ -54,6 +62,13 @@ function ChangeCenter({ position }) {
   const map = useMap(); //useMap coming from react-leaflet
   map.setView(position);
   return null;
+}
+
+function DetectMapClick() {
+  const navigate = useNavigate();
+  useMapEvents({
+    click: (e) => navigate(`form?lat=${e.latlng.lat}&${e.latlng.lng}`),
+  });
 }
 
 export default Map;
