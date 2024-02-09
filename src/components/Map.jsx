@@ -13,19 +13,18 @@ import { flagemojiToPNG } from './FlagEmoji';
 import styles from './Map.module.css';
 import { useGeolocation } from '../hooks/useGeolocation';
 import Button from './Button';
+import { useUrlPosition } from '../hooks/useUrlPosition';
 
 function Map() {
   const { cities } = useCities();
   const [mapPosition, setMapPosition] = useState([40, 0]);
-  const [searchParams] = useSearchParams();
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
     getPosition,
   } = useGeolocation();
 
-  const mapLat = searchParams.get('lat');
-  const mapLng = searchParams.get('lng');
+  const [mapLat, mapLng] = useUrlPosition();
 
   // Remember last selected location and maintain it on the map until changed
   useEffect(
