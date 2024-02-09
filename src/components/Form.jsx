@@ -6,6 +6,7 @@ import BackButton from './BackButton';
 import { useUrlPosition } from '../hooks/useUrlPosition';
 import { flagemojiToPNG } from './FlagEmoji';
 import Message from './Message';
+import Spinner from './Spinner';
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -55,6 +56,10 @@ function Form() {
     [lat, lng]
   );
 
+  // display a spinner when fetching location data
+  if (isLoadingGeocoding) return <Spinner />;
+
+  // Show message when clicking on point outside of any country
   if (geocodingError) return <Message message={geocodingError} />;
 
   return (
