@@ -35,6 +35,66 @@
         "lng": -9.136307420135074
       },
       "id": 73930385
+    },
+    {
+      "cityName": "Greater Manchester",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "emoji": "🇬🇧",
+      "date": "2024-02-11T15:12:36.792Z",
+      "notes": "",
+      "position": {
+        "lat": 53.39204052037782,
+        "lng": -2.4647215719221687
+      },
+      "id": 98443198
+    },
+    {
+      "cityName": "Bordeaux",
+      "country": "France",
+      "emoji": "🇫🇷",
+      "date": "2024-02-11T15:20:58.716Z",
+      "notes": "tres bien",
+      "position": {
+        "lat": 44.83299466060708,
+        "lng": -0.5743004291966637
+      },
+      "id": 98443199
+    },
+    {
+      "cityName": "Milan",
+      "country": "Italy",
+      "emoji": "🇮🇹",
+      "date": "2024-02-11T15:39:46.764Z",
+      "notes": "Buon giorno!",
+      "position": {
+        "lat": 45.460409315480476,
+        "lng": 9.178365143739102
+      },
+      "id": 98443200
+    },
+    {
+      "cityName": "Schladming",
+      "country": "Austria",
+      "emoji": "🇦🇹",
+      "date": "2024-02-11T15:43:05.347Z",
+      "notes": "Ski trip",
+      "position": {
+        "lat": 47.39568694081435,
+        "lng": 13.68871526203187
+      },
+      "id": 98443201
+    },
+    {
+      "cityName": "Hanoi",
+      "country": "Viet Nam",
+      "emoji": "🇻🇳",
+      "date": "2023-04-27T14:47:31.000Z",
+      "notes": "Xin Chào",
+      "position": {
+        "lat": 21.030045476809306,
+        "lng": 105.86355214236298
+      },
+      "id": 98443202
     }
   ]
 }
