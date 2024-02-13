@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 
 const BASE_URL = 'http://localhost:9000';
 
@@ -22,6 +15,7 @@ function reducer(state, action) {
   switch (action.type) {
     case 'loading':
       return { ...state, isLoading: true };
+
     case 'cities/loaded':
       return {
         ...state,
@@ -31,18 +25,23 @@ function reducer(state, action) {
 
     case 'city/loaded':
       return { ...state, isLoading: false, currentCity: action.payload };
+
     case 'city/created':
       return {
         ...state,
         isLoading: false,
         cities: [...state.cities, action.payload],
+        currentCity: action.payload,
       };
+
     case 'city/deleted':
       return {
         ...state,
         isLoading: false,
         cities: state.cities.filter((city) => city.id !== action.payload),
+        currentCity: {},
       };
+
     case 'rejected':
       return { ...state, isLoading: false, error: action.payload };
     default:
@@ -51,14 +50,10 @@ function reducer(state, action) {
 }
 
 function CitiesProvider({ children }) {
-  // const [state, dispatch] = useReducer(reducer, initialState);
   const [{ cities, isLoading, currentCity }, dispatch] = useReducer(
     reducer,
     initialState
   );
-  // const [cities, setCities] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [currentCity, setCurrentCity] = useState({});
 
   useEffect(function () {
     dispatch({ type: 'loading' });
@@ -79,6 +74,7 @@ function CitiesProvider({ children }) {
   }, []);
 
   async function getCity(id) {
+    if (Number(id) === currentCity.id) return;
     dispatch({ type: 'loading' });
 
     try {
@@ -135,6 +131,7 @@ function CitiesProvider({ children }) {
         cities,
         isLoading,
         currentCity,
+        error,
         getCity,
         createCity,
         deleteCity,
