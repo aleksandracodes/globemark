@@ -13,6 +13,7 @@
   --color-light--1: #aaa;
   --color-light--2: #ececec;
   --color-light--3: #d6dee0;
+  --color-error: #8e1212;
 }
 
 * {
@@ -68,6 +69,14 @@ input:focus {
   border-radius: 5px;
 }
 
+.errorMsg {
+  color: #fff;
+  font-size: 1.2rem;
+  border-radius: 7px;
+  background-color: var(--color-error);
+  padding: 0.1rem 2rem;
+  text-align: center;
+}
 /*
 "importCSSModule": {
     "prefix": "csm",
