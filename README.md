@@ -1,4 +1,4 @@
-# GlobeMark <img src="dist/icon.png" style="width: 50px; height:50px;">
+# GlobeMark <img src="public/icon.png" style="width: 50px; height:50px;">
 
 **Developer: Aleksandra Haniok**
 
@@ -55,7 +55,7 @@ npm run server
 npm run dev
 ```
 
-The development server will be running on http://localhost:5173. You can open this URL in your web browser to view the app.
+The development server will be running on `http://localhost:5173`. You can open this URL in your web browser to view the app.
 
 ## Configuration
 
