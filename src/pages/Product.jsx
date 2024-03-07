@@ -13,15 +13,11 @@ export default function Product() {
         <div>
           <h2>About GlobeMark.</h2>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo est
-            dicta illum vero culpa cum quaerat architecto sapiente eius non
-            soluta, molestiae nihil laborum, placeat debitis, laboriosam at fuga
-            perspiciatis?
-          </p>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            doloribus libero sunt expedita ratione iusto, magni, id sapiente
-            sequi officiis et.
+            At GlobeMark, our enthusiasm lies in discovering the world and
+            forging enduring memories. Our venture started with a
+            straightforward concept: aiding fellow travelers, such as yourself,
+            in forming meaningful connections with the destinations you explore
+            and the experiences you encounter.
           </p>
         </div>
       </section>
