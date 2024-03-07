@@ -71,30 +71,6 @@
         "lng": 9.178365143739102
       },
       "id": 98443200
-    },
-    {
-      "cityName": "Schladming",
-      "country": "Austria",
-      "emoji": "🇦🇹",
-      "date": "2024-02-11T15:43:05.347Z",
-      "notes": "Ski trip",
-      "position": {
-        "lat": 47.39568694081435,
-        "lng": 13.68871526203187
-      },
-      "id": 98443201
-    },
-    {
-      "cityName": "Hanoi",
-      "country": "Viet Nam",
-      "emoji": "🇻🇳",
-      "date": "2023-04-27T14:47:31.000Z",
-      "notes": "Xin Chào",
-      "position": {
-        "lat": 21.030045476809306,
-        "lng": 105.86355214236298
-      },
-      "id": 98443202
     }
   ]
 }
