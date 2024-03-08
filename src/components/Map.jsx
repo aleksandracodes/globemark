@@ -9,7 +9,7 @@ import {
 } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import { useCities } from '../contexts/CitiesContext';
-import { flagemojiToPNG } from './FlagEmoji';
+import Flag from './Flag.jsx';
 import styles from './Map.module.css';
 import { useGeolocation } from '../hooks/useGeolocation';
 import Button from './Button';
@@ -67,7 +67,7 @@ function Map() {
             position={[city.position.lat, city.position.lng]}
           >
             <Popup>
-              <span>{flagemojiToPNG(city.emoji)}</span>
+              <Flag countryCode={city.countryCode} />
               <span>{city.cityName}</span>
             </Popup>
           </Marker>

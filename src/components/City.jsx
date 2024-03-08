@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import styles from './City.module.css';
 import { useEffect } from 'react';
 import { useCities } from '../contexts/CitiesContext';
-import { flagemojiToPNG } from './FlagEmoji';
+import Flag from './Flag.jsx';
 import Spinner from './Spinner';
 import BackButton from './BackButton';
 
@@ -26,7 +26,7 @@ function City() {
     [id, getCity]
   );
 
-  const { cityName, emoji, date, notes } = currentCity;
+  const { cityName, countryCode, date, notes } = currentCity;
 
   if (isLoading) return <Spinner />;
 
@@ -35,7 +35,10 @@ function City() {
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
-          <span>{emoji ? flagemojiToPNG(emoji) : ''}</span> {cityName}
+          <span>
+            <Flag countryCode={countryCode} />
+          </span>
+          {cityName}
         </h3>
       </div>
 
@@ -60,10 +63,6 @@ function City() {
         >
           Check out {cityName} on Wikipedia &rarr;
         </a>
-      </div>
-
-      <div>
-        <BackButton />
       </div>
     </div>
   );

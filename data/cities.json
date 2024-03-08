@@ -3,7 +3,7 @@
     {
       "cityName": "Katowice",
       "country": "Poland",
-      "emoji": "🇵🇱",
+      "countryCode": "PL",
       "date": "2027-02-12T09:24:11.863Z",
       "notes": "Amazing 😃",
       "position": {
@@ -15,7 +15,7 @@
     {
       "cityName": "Madrid",
       "country": "Spain",
-      "emoji": "🇪🇸",
+      "countryCode": "ES",
       "date": "2027-07-15T08:22:53.976Z",
       "notes": "iMe encanta!",
       "position": {
@@ -27,7 +27,7 @@
     {
       "cityName": "Lisbon",
       "country": "Portugal",
-      "emoji": "🇵🇹",
+      "countryCode": "PT",
       "date": "2027-10-31T15:59:59.138Z",
       "notes": "My favorite city so far!",
       "position": {
@@ -38,8 +38,8 @@
     },
     {
       "cityName": "Greater Manchester",
-      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
-      "emoji": "🇬🇧",
+      "country": "UK",
+      "countryCode": "GB",
       "date": "2024-02-11T15:12:36.792Z",
       "notes": "",
       "position": {
@@ -51,7 +51,7 @@
     {
       "cityName": "Bordeaux",
       "country": "France",
-      "emoji": "🇫🇷",
+      "countryCode": "FR",
       "date": "2024-02-11T15:20:58.716Z",
       "notes": "tres bien",
       "position": {
@@ -63,7 +63,7 @@
     {
       "cityName": "Milan",
       "country": "Italy",
-      "emoji": "🇮🇹",
+      "countryCode": "IT",
       "date": "2024-02-11T15:39:46.764Z",
       "notes": "Buon giorno!",
       "position": {

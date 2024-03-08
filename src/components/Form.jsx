@@ -4,21 +4,13 @@ import styles from './Form.module.css';
 import Button from './Button';
 import BackButton from './BackButton';
 import { useUrlPosition } from '../hooks/useUrlPosition';
-import { flagemojiToPNG } from './FlagEmoji';
+import Flag from './Flag.jsx';
 import Message from './Message';
 import Spinner from './Spinner';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useCities } from '../contexts/CitiesContext';
 import { useNavigate } from 'react-router-dom';
-
-export function convertToEmoji(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split('')
-    .map((char) => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
-}
 
 const BASE_URL = 'https://api.bigdatacloud.net/data/reverse-geocode-client';
 
@@ -29,7 +21,7 @@ function Form() {
   const [country, setCountry] = useState('');
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState('');
-  const [emoji, setEmoji] = useState('');
+  const [countryCode, setCountryCode] = useState('');
   const [geocodingError, setGeocodingError] = useState('');
   const { createCity, isLoading } = useCities();
   const navigate = useNavigate();
@@ -52,7 +44,7 @@ function Form() {
             );
           setCityName(data.city || data.locality || '');
           setCountry(data.countryName);
-          setEmoji(convertToEmoji(data.countryCode));
+          setCountryCode(data.countryCode || '');
         } catch (err) {
           setGeocodingError(err.message);
         } finally {
@@ -72,7 +64,7 @@ function Form() {
     const newCity = {
       cityName,
       country,
-      emoji,
+      countryCode,
       date,
       notes,
       position: {
@@ -105,7 +97,9 @@ function Form() {
           value={cityName}
         />
 
-        <span className={styles.flag}>{flagemojiToPNG(emoji)}</span>
+        <span className={styles.flag}>
+          <Flag countryCode={countryCode} />
+        </span>
       </div>
 
       <div className={styles.row}>
