@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/FakeAuthContext';
 import { useEffect } from 'react';
+import { useAuth } from '../contexts/FakeAuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -8,7 +8,10 @@ function ProtectedRoute({ children }) {
 
   useEffect(
     function () {
-      if (!isAuthenticated) navigate('/');
+      const storedAuthInfo = localStorage.getItem('user');
+      if (!isAuthenticated && !storedAuthInfo) {
+        navigate('/');
+      }
     },
     [isAuthenticated, navigate]
   );
