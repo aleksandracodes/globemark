@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './CityItem.module.css';
 import Flag from './Flag';
-import { useCities } from '../contexts/CitiesContext';
+import { useLocalCities } from '../contexts/LocalCitiesContext';
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat('en', {
@@ -11,12 +11,12 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function CityItem({ city }) {
+  const { currentCity, deleteCity } = useLocalCities();
   const { cityName, countryCode, date, id, position } = city;
-  const { currentCity, deleteCity } = useCities();
 
-  function handleDelete(e) {
+  async function handleDelete(e) {
     e.preventDefault();
-    deleteCity(id);
+    await deleteCity(id);
   }
 
   return (
@@ -31,7 +31,7 @@ function CityItem({ city }) {
           <Flag countryCode={countryCode} />
         </span>
         <h3 className={styles.name}>{cityName}</h3>
-        <time className={styles.date}>({formatDate(date)})</time>
+        <time className={styles.date}>{formatDate(date)}</time>
         <button className={styles.deleteBtn} onClick={handleDelete}>
           &times;
         </button>

@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
 import styles from './City.module.css';
 import { useEffect } from 'react';
-import { useCities } from '../contexts/CitiesContext';
+import { useLocalCities } from '../contexts/LocalCitiesContext';
 import Flag from './Flag.jsx';
 import Spinner from './Spinner';
 import BackButton from './BackButton';
+import { useUrlPosition } from '../hooks/useUrlPosition';
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat('en', {
@@ -16,8 +17,7 @@ const formatDate = (date) =>
 
 function City() {
   const { id } = useParams(); // 'id' is the name of the param in the Router
-
-  const { getCity, currentCity, isLoading } = useCities();
+  const { getCity, currentCity, isLoading } = useLocalCities();
 
   useEffect(
     function () {
@@ -63,6 +63,9 @@ function City() {
         >
           Check out {cityName} on Wikipedia &rarr;
         </a>
+      </div>
+      <div>
+        <BackButton />
       </div>
     </div>
   );

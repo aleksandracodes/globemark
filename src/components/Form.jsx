@@ -9,26 +9,45 @@ import Message from './Message';
 import Spinner from './Spinner';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useCities } from '../contexts/CitiesContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocalCities } from '../contexts/LocalCitiesContext';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const BASE_URL = 'https://api.bigdatacloud.net/data/reverse-geocode-client';
 
 function Form() {
   const [lat, lng] = useUrlPosition();
+  const { createCity, getCity, currentCity, updateCity } = useLocalCities();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
+
+  const navigate = useNavigate();
   const [cityName, setCityName] = useState('');
   const [country, setCountry] = useState('');
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [geocodingError, setGeocodingError] = useState('');
-  const { createCity, isLoading } = useCities();
-  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const isInput = searchParams.get('mode') === 'input';
+  const isEdit = searchParams.get('mode') === 'edit';
+  const id = searchParams.get('id');
+
+  if (!isInput && !isEdit) throw new Error('Invalid mode');
+
+  function resetForm() {
+    setCityName('');
+    setCountry('');
+    setCountryCode('');
+    setDate(new Date());
+    setNotes('');
+  }
 
   useEffect(
     function () {
+      if (!isInput) return;
       if (!lat && !lng) return;
+
+      resetForm();
 
       async function fetchCityData() {
         try {
@@ -38,12 +57,15 @@ function Form() {
             `${BASE_URL}?latitude=${lat}&longitude=${lng}`
           );
           const data = await res.json();
-          if (!data.countryCode)
+
+          if (!data.countryCode) {
             throw new Error(
-              "This point doesn't seem to belong to any country. Click somewhere else."
+              "That doesn't seem to be a city. Click somewhere else 😉"
             );
+          }
+
           setCityName(data.city || data.locality || '');
-          setCountry(data.countryName);
+          setCountry(data.countryName || '');
           setCountryCode(data.countryCode || '');
         } catch (err) {
           setGeocodingError(err.message);
@@ -51,12 +73,30 @@ function Form() {
           setIsLoadingGeocoding(false);
         }
       }
+
       fetchCityData();
     },
-    [lat, lng]
+    [isInput, lat, lng]
   );
 
-  async function handleSubmit(e) {
+  useEffect(
+    function () {
+      if (!isEdit) return;
+      if (!id) return;
+
+      getCity(id);
+
+      const { cityName, country, countryCode, date, notes } = currentCity;
+      setCityName(cityName);
+      setCountry(country);
+      setCountryCode(countryCode);
+      setDate(new Date(date));
+      setNotes(notes);
+    },
+    [isEdit, id, getCity, currentCity]
+  );
+
+  function handleSubmit(e) {
     e.preventDefault();
 
     if (!cityName || !date) return;
@@ -67,36 +107,35 @@ function Form() {
       countryCode,
       date,
       notes,
-      position: {
-        lat: Number(lat),
-        lng: Number(lng),
-      },
+      position: { lat, lng },
     };
-    await createCity(newCity);
+
+    if (isEdit) {
+      updateCity(id, newCity);
+    }
+    if (isInput) {
+      createCity(newCity);
+    }
+
+    resetForm();
     navigate('/app/cities');
   }
 
-  // display a spinner when fetching location data
   if (isLoadingGeocoding) return <Spinner />;
-
   if (!lat && !lng)
-    return <Message message="Start by clicking somewhere on the map👉" />;
-  // Show message when clicking on point outside of any country
+    return <Message message="Start by click somewhere on the map" />;
   if (geocodingError) return <Message message={geocodingError} />;
 
   return (
-    <form
-      className={`${styles.form} ${isLoading ? styles.loading : ''}`}
-      onSubmit={handleSubmit}
-    >
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
           id="cityName"
           onChange={(e) => setCityName(e.target.value)}
           value={cityName}
+          readOnly
         />
-
         <span className={styles.flag}>
           <Flag countryCode={countryCode} />
         </span>
@@ -104,12 +143,12 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-
         <DatePicker
           id="date"
           onChange={(date) => setDate(date)}
           selected={date}
           dateFormat="dd/MM/yyyy"
+          required
         />
       </div>
 
@@ -119,11 +158,16 @@ function Form() {
           id="notes"
           onChange={(e) => setNotes(e.target.value)}
           value={notes}
+          maxLength="200"
         />
       </div>
 
       <div className={styles.buttons}>
-        <Button type="primary">Add</Button>
+        {isInput ? (
+          <Button type="primary">Add</Button>
+        ) : (
+          <Button type="primary">Update</Button>
+        )}
         <BackButton />
       </div>
     </form>
