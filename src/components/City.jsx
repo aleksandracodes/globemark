@@ -1,10 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from './City.module.css';
 import { useEffect } from 'react';
 import { useLocalCities } from '../contexts/LocalCitiesContext';
 import Flag from './Flag.jsx';
 import Spinner from './Spinner';
-import BackButton from './BackButton';
+import Button from './Button';
 import { useUrlPosition } from '../hooks/useUrlPosition';
 
 const formatDate = (date) =>
@@ -18,6 +18,8 @@ const formatDate = (date) =>
 function City() {
   const { id } = useParams(); // 'id' is the name of the param in the Router
   const { getCity, currentCity, isLoading } = useLocalCities();
+  const navigate = useNavigate();
+  const [lat, lng] = useUrlPosition();
 
   useEffect(
     function () {
@@ -64,8 +66,18 @@ function City() {
           Check out {cityName} on Wikipedia &rarr;
         </a>
       </div>
-      <div>
-        <BackButton />
+      <div className={styles.buttons}>
+        <Button type="back" onClick={() => navigate(-1)}>
+          &larr; Back
+        </Button>
+        <Button
+          type="primary"
+          onClick={() =>
+            navigate(`/app/form?mode=edit&id=${id}&lat=${lat}&lng=${lng}`)
+          }
+        >
+          Edit
+        </Button>
       </div>
     </div>
   );
